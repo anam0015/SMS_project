@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SMS Project{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-..." crossorigin="anonymous">
+    <style>
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; min-height: 100vh; }
+        .content-wrapper { padding: 100px 20px 40px; }
+        .card { box-shadow: 0 10px 20px rgba(0,0,0,0.12); border: none; }
+        .navbar { background: rgba(24, 29, 56, 0.93); }
+        .navbar a { color: #ffffff !important; }
+        .btn-primary { background: #667eea; border-color: #667eea; }
+        .btn-primary:hover { background: #5a6ed5; }
+        .footer-text a, .footer-text a:hover { color: #667eea; }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <a class="navbar-brand" href="{% url 'home' %}">SMS</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navItemList">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navItemList">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'home-get-stud' %}">Students</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'home-insert' %}">Insert</a></li>
+        </ul>
+        <ul class="navbar-nav">
+            {% if user.is_authenticated %}
+                <li class="nav-item"><span class="navbar-text mr-3 text-light">Hello, {{ user.username }}</span></li>
+                <li class="nav-item"><a class="btn btn-danger" href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
+
+<div class="container content-wrapper">
+    {% block content %}{% endblock %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

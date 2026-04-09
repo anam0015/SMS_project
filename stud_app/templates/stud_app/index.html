@@ -1,0 +1,16 @@
+{% extends 'stud_app/base.html' %}
+
+{% block title %}Home - SMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card p-4">
+            <h2 class="mb-3">Welcome to Student Management System</h2>
+            <p class="text-secondary">Use navigation to manage students, add records, and view details.</p>
+            <a class="btn btn-primary mr-2" href="{% url 'home-get-stud' %}">View Students</a>
+            <a class="btn btn-outline-light" href="{% url 'home-insert' %}">Add Student</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

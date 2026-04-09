@@ -1,0 +1,93 @@
+{% extends 'stud_app/base.html' %}
+
+{% block title %}Student List - SMS{% endblock %}
+
+{% block content %}
+<div class="card p-4 bg-white rounded">
+    <h2 class="mb-3">Student List</h2>
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Photo</th>
+                    <th scope="col">Roll</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Marks</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in data %}
+                <tr>
+                    <td><img src="https://i.pravatar.cc/80?img={{ forloop.counter0|add:1 }}" class="img-thumbnail" style="width:60px; height:60px; object-fit:cover; border-radius: 50%;"></td>
+                    <th scope="row">{{ s.roll }}</th>
+                    <td>{{ s.s_name }}</td>
+                    <td>{{ s.subject }}</td>
+                    <td>{{ s.marks }}</td>
+                    <td>
+                        <a href="{% url 'update-view' s.roll %}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{% url 'delete-view' s.roll %}" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No students found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+
+      {% comment %} {{data}}  <br> {% endcomment %}
+
+      <hr>
+      <div style= "margin-left :20px;">
+
+        <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Photo</th>
+      <th scope="col">Roll_no</th>
+      <th scope="col">Name</th>
+      <th scope="col">Subjects</th>
+      <th scope="col">Marks</th>
+      <th scope="col">Actions</th>
+
+    </tr>
+  </thead>
+   <tbody>
+
+     {% for s in data %}
+          
+       
+    <tr>
+      <td>
+        <img src="https://i.pravatar.cc/80?img={{ forloop.counter0|add:1 }}" alt="Avatar {{ s.s_name }}" class="img-thumbnail" style="width:60px; height:60px; object-fit: cover; border-radius:50%;">
+      </td>
+      <th scope="row">{{s.roll}}</th>
+      <td>{{s.s_name}}</td>
+      <td>{{s.subject}}</td>
+      <td>{{s.marks}}</td>
+      <td>  <a href="{% url 'home-update' s.roll %}" class="btn btn-warning">Edit</a> |&nbsp;
+<a href="{% url 'home-delete' s.roll %}" class="btn btn-danger">Delete</a>
+
+      </td>    
+
+
+  {% endfor %}  
+  
+  </tbody>
+</table>
+
+  <a href="{% url 'home-insert' %}" class="btn btn-primary">add Student </a>
+
+  </tbody>
+
+          
+      </div> 
+</body>
+</html>

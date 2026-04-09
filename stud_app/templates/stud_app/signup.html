@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Student Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .signup-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .signup-container h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 8px rgba(102, 126, 234, 0.3);
+            background-color: #f8f9ff;
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .password-info {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            margin-left: 5px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .signup-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        .signup-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .signup-button:active {
+            transform: translateY(0);
+        }
+
+        .error-message {
+            color: #d32f2f;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+            background-color: #ffebee;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #d32f2f;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            color: #2e7d32;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #2e7d32;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .footer-text {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .footer-text a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            text-align: center;
+            color: #999;
+            margin: 20px 0;
+            font-size: 12px;
+        }
+
+        .field-error {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .field-error.show {
+            display: block;
+        }
+
+        @media (max-width: 500px) {
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .signup-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="position:fixed;top:0;width:100%;z-index:1000;">
+        <a class="navbar-brand" href="{% url 'home' %}">SMS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"> <span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'home-get-stud' %}">Students</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'home-insert' %}">Add</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'home-login' %}">Login</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-danger text-white" href="{% url 'home-logout' %}">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="signup-container" style="margin-top:90px;">
+        <h1>Create Account</h1>
+
+        {% if error %}
+            <div class="error-message show">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        {% if success %}
+            <div class="success-message show">
+                {{ success }}
+            </div>
+        {% endif %}
+
+        <form method="POST" action="{% url 'home-signup' %}" onsubmit="return validateForm()">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                <input 
+                    type="text" 
+                    id="id_username" 
+                    name="username" 
+                    placeholder="Choose a unique username" 
+                    required
+                    minlength="3"
+                    maxlength="30"
+                    autofocus
+                >
+                <span class="field-error" id="username-error"></span>
+                <div class="password-info">• Must be 3-30 characters</div>
+            </div>
+
+            <div class="form-group">
+                <label for="id_email">Email Address</label>
+                <input 
+                    type="email" 
+                    id="id_email" 
+                    name="email" 
+                    placeholder="Enter your email address" 
+                    required
+                >
+                <span class="field-error" id="email-error"></span>
+                <div class="password-info">• We'll use this to verify your account</div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_password">Password</label>
+                    <input 
+                        type="password" 
+                        id="id_password" 
+                        name="password" 
+                        placeholder="Create a password" 
+                        required
+                        minlength="4"
+                    >
+                    <span class="field-error" id="password-error"></span>
+                    <div class="password-info">• Minimum 4 characters</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_confirm_password">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        id="id_confirm_password" 
+                        name="confirm_password" 
+                        placeholder="Re-enter password" 
+                        required
+                        minlength="4"
+                    >
+                    <span class="field-error" id="confirm-error"></span>
+                </div>
+            </div>
+
+            <button type="submit" class="signup-button">Create Account</button>
+        </form>
+
+        <div class="divider">or</div>
+
+        <div class="footer-text">
+            Already have an account? <a href="{% url 'home-login' %}">Sign In</a>
+        </div>
+    </div>
+
+    <script>
+        function validateForm() {
+            let isValid = true;
+            
+            // Clear all error messages
+            document.querySelectorAll('.field-error').forEach(el => {
+                el.classList.remove('show');
+                el.textContent = '';
+            });
+
+            const username = document.getElementById('id_username').value.trim();
+            const email = document.getElementById('id_email').value.trim();
+            const password = document.getElementById('id_password').value;
+            const confirmPassword = document.getElementById('id_confirm_password').value;
+
+            // Username validation
+            if (username.length < 3) {
+                document.getElementById('username-error').textContent = 'Username must be at least 3 characters';
+                document.getElementById('username-error').classList.add('show');
+                isValid = false;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('email-error').textContent = 'Please enter a valid email address';
+                document.getElementById('email-error').classList.add('show');
+                isValid = false;
+            }
+
+            // Password validation
+            if (password.length < 4) {
+                document.getElementById('password-error').textContent = 'Password must be at least 4 characters';
+                document.getElementById('password-error').classList.add('show');
+                isValid = false;
+            }
+
+            // Confirm password validation
+            if (password !== confirmPassword) {
+                document.getElementById('confirm-error').textContent = 'Passwords do not match';
+                document.getElementById('confirm-error').classList.add('show');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Real-time password match validation
+        document.getElementById('id_confirm_password').addEventListener('input', function() {
+            const password = document.getElementById('id_password').value;
+            const confirmPassword = this.value;
+            const errorEl = document.getElementById('confirm-error');
+
+            if (confirmPassword && password !== confirmPassword) {
+                errorEl.textContent = 'Passwords do not match';
+                errorEl.classList.add('show');
+            } else {
+                errorEl.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
