@@ -1,20 +1,33 @@
 {% extends 'stud_app/base.html' %}
 
-{% block title %}Student List - SMS{% endblock %}
+{% block title %}Search Results - SMS{% endblock %}
 
 {% block content %}
 <div class="card p-4 bg-white rounded">
-    <h2 class="mb-3">Student List</h2>
+    <h2 class="mb-3">Search Results</h2>
     
     <!-- Search Form -->
     <div class="mb-4">
         <form method="GET" action="{% url 'search-student' %}" class="d-flex gap-2">
-            <input type="text" name="q" class="form-control" placeholder="Search by name or roll number..." value="">
+            <input type="text" name="q" class="form-control" placeholder="Search by name or roll number..." value="{{ query }}">
             <button type="submit" class="btn btn-primary">Search</button>
             <a href="{% url 'get-stud' %}" class="btn btn-secondary">Show All</a>
         </form>
     </div>
+
+    <!-- Search Summary -->
+    {% if search_performed %}
+        <div class="alert alert-info mb-3">
+            <strong>Search term:</strong> "{{ query }}" 
+            {% if data %}
+                - <strong>Found {{ data|length }} result{{ data|length|pluralize }}</strong>
+            {% else %}
+                - <strong>No results found</strong>
+            {% endif %}
+        </div>
+    {% endif %}
     
+    <!-- Results Table -->
     <div class="table-responsive">
         <table class="table table-hover align-middle">
             <thead class="thead-dark">
@@ -42,7 +55,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="6" class="text-center">No students found.</td>
+                    <td colspan="6" class="text-center text-muted">No students found matching your search.</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -50,54 +63,3 @@
     </div>
 </div>
 {% endblock %}
-
-
-      {% comment %} {{data}}  <br> {% endcomment %}
-
-      <hr>
-      <div style= "margin-left :20px;">
-
-        <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Photo</th>
-      <th scope="col">Roll_no</th>
-      <th scope="col">Name</th>
-      <th scope="col">Subjects</th>
-      <th scope="col">Marks</th>
-      <th scope="col">Actions</th>
-
-    </tr>
-  </thead>
-   <tbody>
-
-     {% for s in data %}
-          
-       
-    <tr>
-      <td>
-        <img src="https://i.pravatar.cc/80?img={{ forloop.counter0|add:1 }}" alt="Avatar {{ s.s_name }}" class="img-thumbnail" style="width:60px; height:60px; object-fit: cover; border-radius:50%;">
-      </td>
-      <th scope="row">{{s.roll}}</th>
-      <td>{{s.s_name}}</td>
-      <td>{{s.subject}}</td>
-      <td>{{s.marks}}</td>
-      <td>  <a href="{% url 'home-update' s.roll %}" class="btn btn-warning">Edit</a> |&nbsp;
-<a href="{% url 'home-delete' s.roll %}" class="btn btn-danger">Delete</a>
-
-      </td>    
-
-
-  {% endfor %}  
-  
-  </tbody>
-</table>
-
-  <a href="{% url 'home-insert' %}" class="btn btn-primary">add Student </a>
-
-  </tbody>
-
-          
-      </div> 
-</body>
-</html>

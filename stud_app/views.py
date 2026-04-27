@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from .models import Student   # ✅ import model
 
 # Login page
@@ -164,4 +165,30 @@ def delete_view(request, pk):
     obj = Student.objects.get(roll=pk)
     obj.delete()
     return redirect("/students/student/")
+
+
+# Search students by name or roll number
+@login_required
+def search_student(request):
+    query = request.GET.get('q', '').strip()
+    data = []
+    search_performed = False
+    
+    if query:
+        search_performed = True
+        # Search by roll number (exact match) or name (case-insensitive)
+        try:
+            # Try to search by roll number first
+            roll_search = Student.objects.filter(roll=int(query))
+            data = roll_search if roll_search.exists() else Student.objects.filter(s_name__icontains=query)
+        except ValueError:
+            # If query is not a number, search by name only
+            data = Student.objects.filter(s_name__icontains=query)
+    
+    context = {
+        "data": data, 
+        "query": query,
+        "search_performed": search_performed
+    }
+    return render(request, "stud_app/search_results.html", context)
      

@@ -11,5 +11,6 @@ urlpatterns = [
     path('insert_one/', insert_student, name='insert'),
     path('update_one/<int:pk>/', update_view, name="update-view"),
     path('delete-one/<int:pk>/',delete_view, name="delete-view"),
+    path('search/', search_student, name='search-student'),
     
 ]
