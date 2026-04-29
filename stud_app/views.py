@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from .models import Student   # ✅ import model
+from .models import Student   
+from django.shortcuts import get_object_or_404, redirect# ✅ import model
 
 # Login page
 def login_view(request):
@@ -98,9 +99,7 @@ def signup_view(request):
     context = {"error": error, "success": success}
     return render(request, "stud_app/signup.html", context)
 
-# Home page
-# def home_view(request):
-#     return render(request, "stud_app/index.html")
+
 
 def home_view(request):
     total_students = Student.objects.count()
@@ -133,25 +132,11 @@ def insert_student(request):
         obj = Student(roll=r,s_name=name,subject=subject,marks=marks)
         obj.save()
         
-        return redirect("/students/student/")
+        return redirect("get-stud")
     
     return render(request, "stud_app/add.html")
 
 
-# def update_view(request, pk):
-#     obj = Student.objects.get(roll=pk)
-
-#     if request.method == "POST":
-#         obj.roll = request.POST.get("roll")
-#         obj.s_name = request.POST.get("name")
-#         obj.subject = request.POST.get("sub")
-#         obj.marks = request.POST.get("mks")
-        
-#         obj.save()
-#         return redirect("get-stud")   # ✅ go back to list page
-
-#     context = {"data": obj}
-#     return render(request, "stud_app/update.html", context)
 
 @login_required
 def update_view(request, pk):
@@ -202,3 +187,11 @@ def search_student(request):
     }
     return render(request, "stud_app/search_results.html", context)
      
+
+
+#delete view
+
+def delete_view(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    student.delete()
+    return redirect('get-stud')
