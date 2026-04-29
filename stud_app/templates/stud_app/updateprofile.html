@@ -1,0 +1,10 @@
+<h2>Update Profile</h2>
+
+<form method="post">
+    {% csrf_token %}
+    
+    Username: <input type="text" name="username" value="{{ user.username }}"><br><br>
+    Email: <input type="email" name="email" value="{{ user.email }}"><br><br>
+
+    <button type="submit">Update</button>
+</form>

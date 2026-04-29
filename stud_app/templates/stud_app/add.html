@@ -7,7 +7,7 @@
     <div class="col-md-8">
         <div class="card p-4 bg-white">
             <h2 class="mb-4">Add Student</h2>
-            <form action="{% url 'home-insert' %}" method="POST">
+            <form action="{% url 'insert' %}" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
                     <label>Roll</label>

@@ -99,8 +99,18 @@ def signup_view(request):
     return render(request, "stud_app/signup.html", context)
 
 # Home page
+# def home_view(request):
+#     return render(request, "stud_app/index.html")
+
 def home_view(request):
-    return render(request, "stud_app/index.html")
+    total_students = Student.objects.count()
+    recent_students = Student.objects.order_by('-roll')[:5]
+
+    return render(request, "stud_app/dashboard.html", {
+        'total_students': total_students,
+        'recent_students': recent_students
+    })
+    return render(request, "stud_app/dashboard.html", context)
 
 
 # Display all students

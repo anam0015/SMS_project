@@ -19,15 +19,15 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <a class="navbar-brand" href="{% url 'home' %}">SMS</a>
+    <a class="navbar-brand" href="{% url 'student-home' %}">SMS</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navItemList">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navItemList">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'home-get-stud' %}">Students</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'home-insert' %}">Insert</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'student-home' %}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'get-stud' %}">Students</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'insert' %}">Insert</a></li>
         </ul>
         <ul class="navbar-nav">
             {% if user.is_authenticated %}

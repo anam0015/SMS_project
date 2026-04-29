@@ -82,8 +82,8 @@
       <td>{{s.s_name}}</td>
       <td>{{s.subject}}</td>
       <td>{{s.marks}}</td>
-      <td>  <a href="{% url 'home-update' s.roll %}" class="btn btn-warning">Edit</a> |&nbsp;
-<a href="{% url 'home-delete' s.roll %}" class="btn btn-danger">Delete</a>
+      <td>  <a href="{% url 'update-view' s.roll %}" class="btn btn-warning">Edit</a> |&nbsp;
+<a href="{% url 'delete-view' s.roll %}" class="btn btn-danger">Delete</a>
 
       </td>    
 
@@ -93,7 +93,7 @@
   </tbody>
 </table>
 
-  <a href="{% url 'home-insert' %}" class="btn btn-primary">add Student </a>
+  <a href="{% url 'insert' %}" class="btn btn-primary">add Student </a>
 
   </tbody>
 

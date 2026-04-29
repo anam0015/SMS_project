@@ -15,24 +15,24 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{% url 'home' %}">Student Management System</a>
+        <a class="navbar-brand" href="{% url 'student-home' %}">Student Management System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'home-get-stud' %}">Students</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'home-insert' %}">Add Student</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'home-signup' %}">Signup</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'home-login' %}">Login</a></li>
-                <li class="nav-item"><a class="nav-link btn btn-danger text-white" href="{% url 'home-logout' %}">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'student-home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'get-stud' %}">Students</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'insert' %}">Add Student</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-danger text-white" href="{% url 'logout' %}">Logout</a></li>
             </ul>
         </div>
     </nav>
 
     <H1>Welcome to update page</h1><br>
-<form method="POST" action="{% url 'home-update' data.roll %}">
+<form method="POST" action="{% url 'update-view' data.roll %}">
     {% csrf_token %}
     
     Roll: <input type="text" name="roll" value="{{data.roll}}"><br><br>
